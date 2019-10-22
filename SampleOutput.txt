@@ -1,0 +1,103 @@
+//This is a sample only, some items are deleted or missing, but you can get idea about style of the output.
+
+The value of Second now: 54
+Current Date/Time: 10/10/2019 06:24 PM
+
+Time at other zones:
+Time on Server: 18:24
+GMT: 23:24
+BST (90E): 5:24
+CST (90W): 18:24
+
+Date/time at other zones:
+GMT: 10/10/2019 23:24
+BST: 10/11/2019 05:24
+CST: 10/10/2019 18:24
+
+
+Print Style 1:
+AST 10/01/2020 19:59
+BST 10/11/2019 05:24
+CST 10/10/2019 18:24
+GMT 10/10/2019 23:24
+ZST 11/05/2018 19:59
+Print Style 3:
+10/01/2020 19:59
+10/10/2019 18:24
+10/10/2019 23:24
+10/11/2019 05:24
+11/05/2018 19:59
+Print Style 5: Final sorted Array:
+2020-10-01T19:59
+2019-10-11T05:24
+2019-10-10T23:24
+2019-10-10T18:24
+2018-11-05T19:59
+
+
+The tenth day of this month is THURSDAY and eighteenth is FRIDAY
+
+
+For the year (2019) and month (11), the fifteenth day is FRIDAY and the last day is SATURDAY
+For the year (2020) and month (2), the fifteenth day is SATURDAY and the last day is SATURDAY
+For the year (2000) and month (2), the fifteenth day is TUESDAY and the last day is TUESDAY
+
+
+2017 is not a leap year, and Difference: 2 years, 5 months, and 5 days.
+2018 is not a leap year, and Difference: 0 years, 10 months, and 28 days.
+2004 is a leap year, and Difference: 15 years, 9 months, and 9 days.
+1900 is not a leap year, and Difference: 118 years, 9 months, and 10 days.
+
+
+2000-12-15:5
+2014-02-28:9
+2018-11-12:2
+1900-12-31:8
+2012-10-10:10
+
+
+Now the Hashmap:
+2011-03-15:4
+2012-10-10:10
+
+
+Sorted map:
+ASCII average: 79
+Stations are: {NRMN=79, OKMU=79, STIL=79, JAYX=79, NEWP=79, WOOD=79, STUA=79, WATO=79, MAYR=79, MRSH=79, WAUR=79}
+
+Unsroted Hashmap:
+NRMN 79
+OKMU 79
+STIL 79
+JAYX 79
+NEWP 79
+WOOD 79
+STUA 79
+WATO 79
+MAYR 79
+MRSH 79
+WAUR 79
+
+The sorted map:
+NRMN
+OKMU
+STIL
+STUA
+WATO
+
+Finally, the dates in HashMap are sorted using algorithm:
+
+Sorting of the dates in descending order:
+2026-05-06
+2021-03-31
+2020-12-31
+2011-03-15
+Sorting of the dates in ascending order:
+2010-11-01
+2011-03-15
+2012-10-10
+2018-11-12
+2019-05-30
+
+Execution time for case 1: 2284300
+Execution time for case 2: 395200
