@@ -4,11 +4,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
+import java.text.SimpleDateFormat;
 import java.time.*;
 public class DateTimeOne extends MesoDateTimeOneAbstract
 {
 	LocalDateTime curTime;
+	HashMap<String, String> timeZones;
+	TreeMap<String, String> sortedTimeZones;
 	/**
 	 * Returns second value of system time as INT
 	 */
@@ -70,19 +74,29 @@ public class DateTimeOne extends MesoDateTimeOneAbstract
 		String res = String.format("Time on Server: %d:%d\nGMT: %d:%d\nBST: (90E): %d:%d\nCST(90W): %d:%d", curHour,curMin,gmtHour,gmtMin,bstHour,bstMin,cstHour,cstMin);
 		System.out.println(res);
 	}
-	@SuppressWarnings("deprecation")
 	void dateTimeDifferentZone() {
-		HashMap<String, LocalDateTime> timeZones = new HashMap<String, LocalDateTime>();
-		curTime = LocalDateTime.now();
-		timeZones.put("GMT", curTime.atZone(ZoneId.of("GMT")).toLocalDateTime());
-		timeZones.put("BST", curTime.atZone(ZoneId.of("BST")).toLocalDateTime());
-		timeZones.put("CST", curTime.atZone(ZoneId.of("CST")).toLocalDateTime());
-		timeZones.put("ZST", LocalDateTime.of(2018, 11, 5, 19, 59));
-		timeZones.put("AST", LocalDateTime.of(2020,10,1,19,59));
-
+		String pattern = "MM/dd/yyyy HH:mm";
+		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 		
+		timeZones = new HashMap<String, String>();
+		curTime = LocalDateTime.now();
+		timeZones.put("GMT", formatter.format(curTime.atZone(ZoneId.of("GMT")).toLocalDateTime()));
+		timeZones.put("BST", formatter.format(curTime.atZone(ZoneId.of("BST")).toLocalDateTime()));
+		timeZones.put("CST", formatter.format(curTime.atZone(ZoneId.of("CST")).toLocalDateTime()));
+		timeZones.put("ZST", formatter.format(LocalDateTime.of(2018, 11, 5, 19, 59)));
+		timeZones.put("AST", formatter.format(LocalDateTime.of(2020,10,1,19,59)));
+		
+		timeZones.entrySet().forEach(entry->{
+		    System.out.println(entry.getKey() + " " + entry.getValue());  
+		 });
+			
 	}
 	void timeZoneHashMap() {
+		sortedTimeZones.putAll(timeZones);
+		
+		
+		
+		
 		
 	}
 }
