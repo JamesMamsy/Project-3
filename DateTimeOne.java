@@ -72,13 +72,13 @@ public class DateTimeOne extends MesoDateTimeOneAbstract
 	}
 	@SuppressWarnings("deprecation")
 	void dateTimeDifferentZone() {
-		HashMap<String, ZonedDateTime> timeZones = new HashMap<String, ZonedDateTime>();
+		HashMap<String, LocalDateTime> timeZones = new HashMap<String, LocalDateTime>();
 		curTime = LocalDateTime.now();
-		timeZones.put("GMT", curTime.atZone(ZoneId.of("GMT")));
-		timeZones.put("BST", curTime.atZone(ZoneId.of("BST")));
-		timeZones.put("CST", curTime.atZone(ZoneId.of("CST")));
-		timeZones.put("ZST", new Date(2019,11,5,19,59));
-		timeZones.put("AST", new Date(2020,10,1,19,59));
+		timeZones.put("GMT", curTime.atZone(ZoneId.of("GMT")).toLocalDateTime());
+		timeZones.put("BST", curTime.atZone(ZoneId.of("BST")).toLocalDateTime());
+		timeZones.put("CST", curTime.atZone(ZoneId.of("CST")).toLocalDateTime());
+		timeZones.put("ZST", LocalDateTime.of(2018, 11, 5, 19, 59));
+		timeZones.put("AST", LocalDateTime.of(2020,10,1,19,59));
 
 		
 	}
