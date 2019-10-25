@@ -1,18 +1,22 @@
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
-import java.text.SimpleDateFormat;
 import java.time.*;
 public class DateTimeOne extends MesoDateTimeOneAbstract
 {
 	LocalDateTime curTime;
-	HashMap<String, String> timeZones;
+	HashMap<String, LocalDateTime> timeZones;
 	TreeMap<String, String> sortedTimeZones;
+	TreeMap<String,String> sortedFormatted;
+	
+	
+	public DateTimeOne(){
+		initHashMaps();		
+	}
 	/**
 	 * Returns second value of system time as INT
 	 */
@@ -75,28 +79,58 @@ public class DateTimeOne extends MesoDateTimeOneAbstract
 		System.out.println(res);
 	}
 	void dateTimeDifferentZone() {
-		String pattern = "MM/dd/yyyy HH:mm";
-		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-		
-		timeZones = new HashMap<String, String>();
-		curTime = LocalDateTime.now();
-		timeZones.put("GMT", formatter.format(curTime.atZone(ZoneId.of("GMT")).toLocalDateTime()));
-		timeZones.put("BST", formatter.format(curTime.atZone(ZoneId.of("BST")).toLocalDateTime()));
-		timeZones.put("CST", formatter.format(curTime.atZone(ZoneId.of("CST")).toLocalDateTime()));
-		timeZones.put("ZST", formatter.format(LocalDateTime.of(2018, 11, 5, 19, 59)));
-		timeZones.put("AST", formatter.format(LocalDateTime.of(2020,10,1,19,59)));
-		
-		timeZones.entrySet().forEach(entry->{
+		timeZones.entrySet().forEach(
+				entry->{
 		    System.out.println(entry.getKey() + " " + entry.getValue());  
-		 });
+		 }
+				);
 			
+		System.out.println("\nEnd Of Input\n");
 	}
 	void timeZoneHashMap() {
-		sortedTimeZones.putAll(timeZones);
 		
+		System.out.println("Format 1:");
+		sortedTimeZones.entrySet().forEach(entry->{
+		    System.out.println(entry.getKey() + " " + entry.getValue());  
+		 });
 		
+		System.out.println("Format 2:");
+		//forEachFunction would not work, using forEach loop instead
+		for(Map.Entry<String, String> entry:sortedFormatted.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+		}
 		
+	}
+	
+	void initHashMaps() {
+		//Set-Up UnSorted HashMap
+		String pattern = "MM/dd/yyyy HH:mm";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
 		
+		timeZones = new HashMap<String, LocalDateTime>();
+		curTime = LocalDateTime.now();
+		timeZones.put("GMT", curTime.atZone(ZoneId.of("GMT")).toLocalDateTime());
+		timeZones.put("BST", curTime.atZone(ZoneId.of("GMT+6")).toLocalDateTime());
+		timeZones.put("CST", curTime.atZone(ZoneId.of("GMT-5")).toLocalDateTime());
+		timeZones.put("ZST", LocalDateTime.of(2018,Month.NOVEMBER,5,19,59));
+		timeZones.put("AST", LocalDateTime.of(2020,Month.OCTOBER,1,19,59));
 		
+		//Setup Sorted Hashmap
+		sortedTimeZones = new TreeMap<String, String>();
+		timeZones.keySet().forEach(key->{
+			sortedTimeZones.put(key, formatter.format(timeZones.get(key)));
+			
+		});
+		//Formatters for 
+		String datePattern = "MM/dd/yy";
+		String timePattern = "HH:mm";
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(datePattern);
+		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(timePattern);
+		
+		//Setup Second Sorted Hashmap (for Second Format)
+		sortedFormatted = new TreeMap<String, String>();
+		timeZones.keySet().forEach(key->{
+			sortedFormatted.put(dateFormatter.format(timeZones.get(key)), timeFormatter.format(timeZones.get(key)));
+		});
 	}
 }
