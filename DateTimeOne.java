@@ -1,4 +1,8 @@
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +16,7 @@ public class DateTimeOne extends MesoDateTimeOneAbstract
 	HashMap<String, LocalDateTime> timeZones;
 	TreeMap<String, String> sortedTimeZones;
 	TreeMap<String,String> sortedFormatted;
-	
+	LocalDateTime[] sortedArray = new LocalDateTime[5];
 	
 	public DateTimeOne(){
 		initHashMaps();		
@@ -45,7 +49,7 @@ public class DateTimeOne extends MesoDateTimeOneAbstract
 		}
 		
 		int minute = curTime.getMinute();
-		
+		System.out.println("The value of the second now: " + this.getValueOfSecond());
 		String res = String.format("Current Date/Time: %s/%d/%d %d:%d %s", month,day,year,hour,minute,end);
 		
 		System.out.println(res);
@@ -74,14 +78,21 @@ public class DateTimeOne extends MesoDateTimeOneAbstract
 		cal.setTimeZone(TimeZone.getTimeZone("CST"));
 		int cstHour = cal.getTime().getHours();
 		int cstMin = cal.getTime().getMinutes();
-		
+		System.out.println();
 		String res = String.format("Time on Server: %d:%d\nGMT: %d:%d\nBST: (90E): %d:%d\nCST(90W): %d:%d", curHour,curMin,gmtHour,gmtMin,bstHour,bstMin,cstHour,cstMin);
 		System.out.println(res);
 	}
 	void dateTimeDifferentZone() {
+		
+		timeZones = new HashMap<String, LocalDateTime>();
+		curTime = LocalDateTime.now();
+		timeZones.put("GMT", curTime.atZone(ZoneId.of("GMT")).toLocalDateTime());
+		timeZones.put("BST", curTime.atZone(ZoneId.of("GMT+6")).toLocalDateTime());
+		timeZones.put("CST", curTime.atZone(ZoneId.of("GMT-5")).toLocalDateTime());
+		
 		timeZones.entrySet().forEach(
 				entry->{
-		    System.out.println(entry.getKey() + " " + entry.getValue());  
+		    System.out.println(entry.getKey() + " " + entry.getValue().truncatedTo(ChronoUnit.MINUTES));  
 		 }
 				);
 			
@@ -89,17 +100,21 @@ public class DateTimeOne extends MesoDateTimeOneAbstract
 	}
 	void timeZoneHashMap() {
 		
-		System.out.println("Format 1:");
+		System.out.println("Print Style 1:");
 		sortedTimeZones.entrySet().forEach(entry->{
 		    System.out.println(entry.getKey() + " " + entry.getValue());  
 		 });
 		
-		System.out.println("Format 2:");
+		System.out.println("Print Style 3:");
 		//forEachFunction would not work, using forEach loop instead
 		for(Map.Entry<String, String> entry:sortedFormatted.entrySet()) {
 			System.out.println(entry.getKey() + " " + entry.getValue());
 		}
 		
+		System.out.println("Print Style 5: Final Sorted Array:");
+		for(LocalDateTime dt: sortedArray) {
+			System.out.println(dt.truncatedTo(ChronoUnit.MINUTES).toString());
+		}
 	}
 	
 	void initHashMaps() {
@@ -132,5 +147,18 @@ public class DateTimeOne extends MesoDateTimeOneAbstract
 		timeZones.keySet().forEach(key->{
 			sortedFormatted.put(dateFormatter.format(timeZones.get(key)), timeFormatter.format(timeZones.get(key)));
 		});
+		
+		sortedFormatted.put("11/5/18", "19:59");
+		sortedFormatted.put("10/1/2020", "19:59");
+		
+		//Setup array
+		int i = 0;
+		for(Map.Entry<String, LocalDateTime> entry:timeZones.entrySet()) {
+			sortedArray[i] = timeZones.get(entry.getKey());
+			++i;
+		}
+		
+		Arrays.sort(sortedArray);
+		
 	}
 }

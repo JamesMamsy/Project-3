@@ -3,6 +3,7 @@ public class MesoAsciiCal extends MesoAsciiAbstract
 {
 	Double avg;
 	MesoStation mesoStation;
+
 	public MesoAsciiCal(MesoStation mesoStation) {
 		this.mesoStation = mesoStation;
 	}
@@ -13,7 +14,9 @@ public class MesoAsciiCal extends MesoAsciiAbstract
 		Double avg = 0.0;
 		int ceilValue;
 		int floorValue;
-		int lastValue;
+		int firstAvg;
+		int secondAvg;
+		
 		for(int x = 0; x < name.length(); ++x) {
 			avg += (int)name.charAt(x);
 		}
@@ -24,13 +27,16 @@ public class MesoAsciiCal extends MesoAsciiAbstract
 		
 		
 		if(avg - (double)floorValue >= 0.75) {
-			lastValue = ceilValue;
+			 firstAvg = ceilValue;
 		}
 		else {
-			lastValue = floorValue;
+			firstAvg =floorValue;
 		}
 		
-		return lastValue;
+		secondAvg = 79;
+		
+		return (int)Math.ceil((double)(firstAvg+secondAvg) / 2);
+		
 	}
 
 
